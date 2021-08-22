@@ -41,7 +41,7 @@ class Simulation:
         self.AMB=self.calcAngularMomentum()
     
     def __str__(self):
-        #sets appropriate values for method being simulated and what conservation tests are being performed
+        #Sets appropriate values for method being simulated and what conservation tests are being performed
         if self.testLM==0:
             LM="No"
         else:
