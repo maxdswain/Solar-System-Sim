@@ -20,10 +20,10 @@ class Simulation:
         The default is to use the Verlet method.
     testLM: int
         An integer defining whether the linear momentum before, 
-        after and the change in linear momentum will be calcualted using the calcLinearMomentum method.
+        after and the change in linear momentum will be calculated using the calcLinearMomentum method.
     testAM: int
         An integer defining whether the angular momentum before, 
-        after and the change in angular momentum will be calcualted using the calcAngularMomentum method.
+        after and the change in angular momentum will be calculated using the calcAngularMomentum method.
     timeIntervals: int
         The number of time steps that will be ran if the simulation is ran.
     deltaT: float
