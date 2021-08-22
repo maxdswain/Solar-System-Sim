@@ -3,8 +3,6 @@ import copy
 import matplotlib.pyplot as plt
 from Planets import getPlanets
 
-#test
-
 class Simulation:
     """
     Class to setup a simulation instance with an associated list of bodies.
