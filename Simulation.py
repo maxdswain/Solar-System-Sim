@@ -59,7 +59,7 @@ class Simulation:
         if self.run==self.methodV:
             method="Verlet"
         #Uses list comprehension as well as the input data to give all the important details about the simulation being run when its printed
-        return "Name: {0}\nMethod: {1}\nBodies: {2}\nLinear Momentum Tested?: {3}\nAngular Momentum Tested?: {4}\nTime: {5}s over {6} intervals with diff {7}s".format(
+        return "Name: {0}\nMethod: {1}\nBodies: {2}\nLinear Momentum Tested?: {3}\nAngular Momentum Tested?: {4}\nTime: {5}s over {6} intervals with a difference {7}s betweeb them.".format(
             self.name, method, ", ".join([body.name for body in self.Bodies]), LM, AM,
             self.deltaT*self.timeIntervals, self.timeIntervals, self.deltaT
         )

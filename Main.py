@@ -9,8 +9,8 @@ import copy
 def analyticalTest():
     #defining the initial conditions
     Earth=Particle(
-    position=np.array([0,0,0]),
-    velocity=np.array([0,0,0]),
+    position=np.zeros(3),
+    velocity=np.zeros(3),
     name="Earth",
     mass=5.972e24
     )

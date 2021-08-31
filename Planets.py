@@ -25,17 +25,15 @@ def getPlanets(t=Time("2019-04-11 11:00:00", scale="tdb")):
     Bodies=[]
     for planet in [x for x in solar_system_ephemeris.bodies if x != "earth-moon-barycenter"]:
         pos, vel=get_body_barycentric_posvel(planet, t, ephemeris="jpl")
-        statevec=[
-            pos.xyz[0].to("m").value,
-            pos.xyz[1].to("m").value,
-            pos.xyz[2].to("m").value,
-            vel.xyz[0].to("m/s").value,
-            vel.xyz[1].to("m/s").value,
-            vel.xyz[2].to("m/s").value,
-        ]
+        def metric(x):
+            if x==pos:
+                return "m"
+            elif x==vel:
+                return "m/s"
+        statevec=[x.xyz[i].to(metric(x)).value for x in [pos, vel] for i in range(3)]
         statevececl=mxvg(sxform("J2000", "ECLIPJ2000", t.jd), statevec, 6, 6)
         planet=Particle(
-            position=np.array([statevececl[0], statevececl[1], statevececl[2]]),
+            position=np.array([[statevececl[0], statevececl[1], statevececl[2]]]),
             velocity=np.array([statevececl[3], statevececl[4], statevececl[5]]),
             name=planet.capitalize(),
             mass=(getattr(constants, "GM_{}".format(planet)) / G).value

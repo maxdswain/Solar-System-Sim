@@ -19,9 +19,9 @@ class Particle:
     """
     def __init__(
         self,
-        position=np.array([0, 0, 0], dtype=float),
-        velocity=np.array([0, 0, 0], dtype=float),
-        acceleration=np.array([0, 0, 0], dtype=float),
+        position=np.zeros(3),
+        velocity=np.zeros(3),
+        acceleration=np.zeros(3),
         name='Ball',
         mass=1.0,
     ):
