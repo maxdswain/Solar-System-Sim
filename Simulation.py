@@ -20,10 +20,10 @@ class Simulation:
         The default is to use the Verlet method.
     testLM: int
         An integer defining whether the linear momentum before, 
-        after and the change in linear momentum will be calcualted using the calcLinearMomentum method.
+        after and the change in linear momentum will be calculated using the calcLinearMomentum method.
     testAM: int
         An integer defining whether the angular momentum before, 
-        after and the change in angular momentum will be calcualted using the calcAngularMomentum method.
+        after and the change in angular momentum will be calculated using the calcAngularMomentum method.
     timeIntervals: int
         The number of time steps that will be ran if the simulation is ran.
     deltaT: float
@@ -41,7 +41,7 @@ class Simulation:
         self.AMB=self.calcAngularMomentum()
     
     def __str__(self):
-        #sets appropriate values for method being simulated and what conservation tests are being performed
+        #Sets appropriate values for method being simulated and what conservation tests are being performed
         if self.testLM==0:
             LM="No"
         else:
@@ -50,29 +50,25 @@ class Simulation:
             AM="No"
         else:
             AM="Yes"
-        if self.run==self.methodE:
-            method="Euler"
-        if self.run==self.methodEC:
-            method="Euler-Cromer"
-        if self.run==self.methodER:
-            method="Euler-Richardson"
-        if self.run==self.methodV:
-            method="Verlet"
         #Uses list comprehension as well as the input data to give all the important details about the simulation being run when its printed
-        return "Name: {0}\nMethod: {1}\nBodies: {2}\nLinear Momentum Tested?: {3}\nAngular Momentum Tested?: {4}\nTime: {5}s over {6} intervals with diff {7}s".format(
-            self.name, method, ", ".join([body.name for body in self.Bodies]), LM, AM,
+        return "Name: {0}\nMethod: {1}\nBodies: {2}\nLinear Momentum Tested?: {3}\nAngular Momentum Tested?: {4}\nTime: {5}s over {6} intervals with a difference {7}s betweeb them.".format(
+            self.name, self.mName, ", ".join([body.name for body in self.Bodies]), LM, AM,
             self.deltaT*self.timeIntervals, self.timeIntervals, self.deltaT
         )
 
     def setMethod(self, method):
         if method==1:
             self.run=self.methodE
+            self.mName="Euler"
         elif method==2:
             self.run=self.methodEC
+            self.mName="Euler-Cromer"
         elif method==3:
             self.run=self.methodER
+            self.mName="Euler-Richardson"
         elif method==4:
             self.run=self.methodV
+            self.mName="Verlet"
         else:
             raise ValueError("Invalid method inputted, method must be 1-4.")
     
@@ -125,7 +121,7 @@ class Simulation:
             #then uses that to calculate the velocity and position of that body using the Euler-Richardson method,
             #then repeats this process for all bodies
             for body in self.Bodies:
-                amid=np.array([0,0,0], dtype=float)
+                amid=np.zeros(3)
                 for i in range(len(self.Bodies)):
                     if self.Bodies[i] !=body:
                         diff=body.pmid-self.Bodies[i].pmid
@@ -153,7 +149,7 @@ class Simulation:
             #Calculates the acceleration after one time step for one body, 
             #then uses that to calculate the velocity and position of that body using the Verlet method, then repeats this process for all bodies
             for body in self.Bodies:
-                endAcceleration=np.array([0,0,0], dtype=float)
+                endAcceleration=np.zeros(3)
                 for i in range(len(self.Bodies)):
                     if self.Bodies[i] !=body:
                         diff=body.pV-self.Bodies[i].pV
@@ -172,15 +168,13 @@ class Simulation:
 
     def calcLinearMomentum(self):
         if self.testLM==1:
-            temp=np.sum([body.linearMomentum() for body in self.Bodies], axis=0)
-            return temp
+            return np.sum([body.linearMomentum() for body in self.Bodies], axis=0)
         else:
             return np.zeros(3)
 
     def calcAngularMomentum(self):
         if self.testAM==1:
-            temp=np.sum([body.angularMomentum() for body in self.Bodies], axis=0)
-            return temp
+            return np.sum([body.angularMomentum() for body in self.Bodies], axis=0)
         else:
             return np.zeros(3)
 

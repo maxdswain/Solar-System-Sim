@@ -19,9 +19,9 @@ class Particle:
     """
     def __init__(
         self,
-        position=np.array([0, 0, 0], dtype=float),
-        velocity=np.array([0, 0, 0], dtype=float),
-        acceleration=np.array([0, 0, 0], dtype=float),
+        position=np.zeros(3),
+        velocity=np.zeros(3),
+        acceleration=np.zeros(3),
         name='Ball',
         mass=1.0,
     ):
@@ -60,12 +60,12 @@ class Particle:
 
     #calculates the gravitational acceleration between this body and another arbitrary body
     def updateGravitationalAcceleration(self, body):
-        diff=np.subtract(self.position, body.position)
+        diff=self.position-body.position
         r=np.linalg.norm(diff)
         return ((-self.G*body.mass)/(r**2))*(diff/(r))
 
     def linearMomentum(self):
-        return np.multiply(self.mass, self.velocity)
+        return self.mass*self.velocity
 
     def angularMomentum(self):
-        return np.cross(self.position, np.multiply(self.mass, self.velocity))
+        return np.cross(self.position, self.mass*self.velocity)

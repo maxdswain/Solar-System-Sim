@@ -22,23 +22,14 @@ def getPlanets(t=Time("2019-04-11 11:00:00", scale="tdb")):
     Bodies: list
         A list of all the planets, in the form of Particle instances, in the solar system at the specified time (t) from the JPL.
     """
-    Bodies=[]
-    for planet in [x for x in solar_system_ephemeris.bodies if x != "earth-moon-barycenter"]:
+    def pullConvert(planet):
         pos, vel=get_body_barycentric_posvel(planet, t, ephemeris="jpl")
-        statevec=[
-            pos.xyz[0].to("m").value,
-            pos.xyz[1].to("m").value,
-            pos.xyz[2].to("m").value,
-            vel.xyz[0].to("m/s").value,
-            vel.xyz[1].to("m/s").value,
-            vel.xyz[2].to("m/s").value,
-        ]
+        statevec=[x.xyz[i].to("m").value if x==pos else x.xyz[i].to("m/s").value for x in [pos, vel] for i in range(3)]
         statevececl=mxvg(sxform("J2000", "ECLIPJ2000", t.jd), statevec, 6, 6)
-        planet=Particle(
+        return Particle(
             position=np.array([statevececl[0], statevececl[1], statevececl[2]]),
             velocity=np.array([statevececl[3], statevececl[4], statevececl[5]]),
             name=planet.capitalize(),
             mass=(getattr(constants, "GM_{}".format(planet)) / G).value
         )
-        Bodies.append(planet)
-    return Bodies
+    return [pullConvert(planet) for planet in [x for x in solar_system_ephemeris.bodies if x != "earth-moon-barycenter"]]
