@@ -1,9 +1,22 @@
 # Python Solar System Simulation
 
-To run my simulation, use the `Main.py` file and run the functions in that file to run the code, examples of thing you can run are:
+This simulation uses one of Euler, Euler-Cromer, Euler-Richardson or Verlet methods to simulate and plot the solar system orbits to an accurate degree by pulling position and velocity data from the JPL Horizons ephemerides. The simulation is saved and can be plotted and easily read at a later date.
+
+![Zoomed in Solar System Orbits](solarsystemorbits.png)
+
+To run my simulation, use the `Main.py` file and run the functions in that file to run the code. The input bodies (if you wanted to simulate different bodies or different planets) can be configured as well as numerous intial conditions such as the intervals, the time between the intervals, starting date of simulation and whether the linear and angular momentum are tested to ensure the simulation is running accurately. Below is example code of running the simulation:
 
 ```
-analyticalTest()
+t1=Time("2020-12-25 11:00:00", scale="tdb")
+test=Simulation(
+    name="Test",
+    Bodies=getPlanets(t1),
+    timeIntervals=5000, 
+    deltaT=8., 
+    method=1,
+    testLM=1,
+    testAM=1
+)
 jplTest(t1, test)
 ```
 
@@ -28,3 +41,6 @@ jplTest(t1, test)
 This simulation was done for my second year Scientific programming module as the final project, below is a description of the task.
 
 > Create a simulation which produces and evolves an n-body gravitationally interacting system with ability to naturally take in arbitrary bodies, or simulates systems with additional physics.
+
+### References
+[JPL Horizons Ephemerides](https://docs.astropy.org/en/stable/coordinates/solarsystem.html)
