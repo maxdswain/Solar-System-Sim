@@ -1,6 +1,6 @@
 # Python Solar System Simulation
 
-This simulation uses one of Euler, Euler-Cromer, Euler-Richardson or Verlet methods to simulate and plot the solar system orbits to an accurate degree by pulling position and velocity data from the JPL Horizons ephemerides. The simulation is saved and can be plotted and easily read at a later date.
+This simulation uses one of the Euler, Euler-Cromer, Euler-Richardson or Verlet methods to simulate and plot the solar system orbits to an accurate degree by pulling position and velocity data from the JPL Horizons ephemerides. The simulation is saved and can be plotted and easily read at a later date.
 
 ![Zoomed in Solar System Orbits](solarsystemorbits.png)
 
