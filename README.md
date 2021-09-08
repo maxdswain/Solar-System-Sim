@@ -1,10 +1,10 @@
 # Python Solar System Simulation
 
-This simulation uses one of the Euler, Euler-Cromer, Euler-Richardson or Verlet methods to simulate and plot the solar system orbits to an accurate degree by pulling position and velocity data from the JPL Horizons ephemerides. The simulation is saved and can be plotted and easily read at a later date.
+This simulation uses one of the Euler, Euler-Cromer, Euler-Richardson or Verlet numerical methods to simulate and plot the solar system orbits to an accurate degree by pulling position and velocity data from the JPL Horizons ephemerides. The simulation is saved and can be plotted and easily read at a later date.
 
 ![Zoomed in Solar System Orbits](solarsystemorbits.png)
 
-To run my simulation, use the `Main.py` file and run the functions in that file to run the code. The input bodies (if you wanted to simulate different bodies or different planets) can be configured as well as numerous intial conditions such as the intervals, the time between the intervals, starting date of simulation and whether the linear and angular momentum are tested to ensure the simulation is running accurately. Below is example code of running the simulation:
+To run my simulation, use the `Main.py` file and run the functions in that file to run the code. The input bodies (if you wanted to simulate different bodies or different planets) can be configured as well as numerous initial conditions such as the intervals, the time between the intervals, starting date of simulation and whether the linear and angular momentum are tested to ensure the simulation is running accurately. Below is example code of running the simulation:
 
 ```
 t1=Time("2020-12-25 11:00:00", scale="tdb")
