@@ -41,11 +41,9 @@ def analyticalTest():
             for i in range(3)
             if sol[x].__getattribute__(variable)[i] != 0
         ])
-    print(analyticalSim, "\nThe Satellite's Position, Velocity and Acceleration after {0} seconds are:".format((test.timeIntervals*test.deltaT)))
+    print(analyticalSim, f"\nThe Satellite's Position, Velocity and Acceleration after {test.timeIntervals*test.deltaT} seconds are:")
     print(Sat)
-    print("Max Inaccuracy: {0}%\nMean Inaccuracy: {1}%\nChange in Linear Momentum: {2}\nChange in Angular Momentum: {3}".format(
-        np.amax(analyticalAcc), np.mean(analyticalAcc), analyticalSim.LMC, analyticalSim.AMC
-    ))
+    print(f"Max Inaccuracy: {np.amax(analyticalAcc)}%\nMean Inaccuracy: {np.mean(analyticalAcc)}%\nChange in Linear Momentum: {analyticalSim.LMC}\nChange in Angular Momentum: {analyticalSim.AMC}")
 
 #initial conditions for running a simulation and comparing the results to the JPL
 t1=Time("2019-04-11 11:00:00", scale="tdb")
@@ -63,13 +61,12 @@ def jplTest(t1, test):
     #inputs: starting time, timeIntervals, deltaT, method, testLM, testAM
     t2=t1+TimeDelta(test.timeIntervals*test.deltaT, format="sec")
     test, accuracies=detAccuracy(t2, test)
-    print(test, "\nThe Bodies Positions, Velocities and Accelerations after {0} seconds are:".format((test.timeIntervals*test.deltaT)))
+    print(test, f"\nThe Bodies Positions, Velocities and Accelerations after {test.timeIntervals*test.deltaT} seconds are:")
     for body in test.Bodies:
         print(body)
-    print("Max Inaccuracy: {0}%\nMean Inaccuracy: {1}%\nChange in Linear Momentum: {2}\nChange in Angular Momentum: {3}".format(
-        np.amax(accuracies), np.mean(accuracies), test.LMC, test.AMC
-    ))
+    print(f"Max Inaccuracy: {np.amax(accuracies)}%\nMean Inaccuracy: {np.mean(accuracies)}%\nChange in Linear Momentum: {test.LMC}\nChange in Angular Momentum: {test.AMC}")
 
 #just some examples of how the code can be ran
-#analyticalTest()
-#jplTest(t1, test)
+if __name__ == "__main__":
+    #analyticalTest()
+    jplTest(t1, test)

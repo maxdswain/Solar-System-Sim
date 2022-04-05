@@ -42,35 +42,35 @@ class Simulation:
     
     def __str__(self):
         #Sets appropriate values for method being simulated and what conservation tests are being performed
-        if self.testLM==0:
-            LM="No"
-        else:
-            LM="Yes"
-        if self.testAM==0:
-            AM="No"
-        else:
-            AM="Yes"
+        match self.testLM:
+            case 0:
+                LM="No"
+            case 1:
+                LM="Yes"
+        match self.testAM:
+            case 0:
+                AM="No"
+            case 1:
+                AM="Yes"
         #Uses list comprehension as well as the input data to give all the important details about the simulation being run when its printed
-        return "Name: {0}\nMethod: {1}\nBodies: {2}\nLinear Momentum Tested?: {3}\nAngular Momentum Tested?: {4}\nTime: {5}s over {6} intervals with a difference {7}s betweeb them.".format(
-            self.name, self.mName, ", ".join([body.name for body in self.Bodies]), LM, AM,
-            self.deltaT*self.timeIntervals, self.timeIntervals, self.deltaT
-        )
+        return f"Name: {self.name}\nMethod: {self.mName}\nBodies: {', '.join([body.name for body in self.Bodies])}\nLinear Momentum Tested?: {LM}\nAngular Momentum Tested?: {AM}\nTime: {self.deltaT*self.timeIntervals}s over {self.timeIntervals} intervals with a difference {self.deltaT}s between them."
 
     def setMethod(self, method):
-        if method==1:
-            self.run=self.methodE
-            self.mName="Euler"
-        elif method==2:
-            self.run=self.methodEC
-            self.mName="Euler-Cromer"
-        elif method==3:
-            self.run=self.methodER
-            self.mName="Euler-Richardson"
-        elif method==4:
-            self.run=self.methodV
-            self.mName="Verlet"
-        else:
-            raise ValueError("Invalid method inputted, method must be 1-4.")
+        match method:
+            case 1:
+                self.run=self.methodE
+                self.mName="Euler"
+            case 2:
+                self.run=self.methodEC
+                self.mName="Euler-Cromer"
+            case 3:
+                self.run=self.methodER
+                self.mName="Euler-Richardson"
+            case 4:
+                self.run=self.methodV
+                self.mName="Verlet"
+            case _:
+                raise ValueError("Invalid method inputted, method must be 1-4.")
     
     def methodE(self):
         Data=[]
@@ -81,7 +81,7 @@ class Simulation:
             for body in self.Bodies:
                 body.updateE(self.deltaT)
             #stores each body being simulated at the respective time to a list every 100 time intervals
-            if (x-1)%100 ==0:
+            if (x-1)%100 == 0:
                 tempList=[copy.deepcopy(member) for member in self.Bodies]
                 tempList.insert(0, x*self.deltaT)
                 Data.append(tempList)
@@ -99,7 +99,7 @@ class Simulation:
             for body in self.Bodies:
                 body.updateEC(self.deltaT)
             #stores each body being simulated at the respective time to a list every 100 time intervals
-            if (x-1)%100 ==0:
+            if (x-1)%100 == 0:
                 tempList=[copy.deepcopy(member) for member in self.Bodies]
                 tempList.insert(0, x*self.deltaT)
                 Data.append(tempList)
@@ -129,7 +129,7 @@ class Simulation:
                         amid+=((-body.G*self.Bodies[i].mass)/(r**2))*((diff)/(r))
                 body.updateER(self.deltaT, amid)
             #stores each body being simulated at the respective time to a list every 100 time intervals
-            if (x-1)%100 ==0:
+            if (x-1)%100 == 0:
                 tempList=[copy.deepcopy(member) for member in self.Bodies]
                 tempList.insert(0, x*self.deltaT)
                 Data.append(tempList)
@@ -157,7 +157,7 @@ class Simulation:
                         endAcceleration+=((-body.G*self.Bodies[i].mass)/(r**2))*((diff)/(r))
                 body.updateV(self.deltaT, endAcceleration)
             #stores each body being simulated at the respective time to a list every 100 time intervals
-            if (x-1)%100 ==0:
+            if (x-1)%100 == 0:
                 tempList=[copy.deepcopy(member) for member in self.Bodies]
                 tempList.insert(0, x*self.deltaT)
                 Data.append(tempList)
@@ -180,7 +180,7 @@ class Simulation:
 
     #plots all the bodies in the simulation at their current position
     def plot(self):
-        DataIn=np.load("{}.npy".format(self.name), allow_pickle=True)
+        DataIn=np.load(f"{self.name}.npy", allow_pickle=True)
         ax, length=plt.subplot(), range(len(DataIn))
         for x in range(1,len(DataIn[0])):
             ax.plot([DataIn[i][x].position[0] for i in length], 
@@ -190,5 +190,5 @@ class Simulation:
         ax.set_xlabel(r"$x$ position [m]")
         ax.set_ylabel(r"$y$ position [m]")
         ax.legend()
-        plt.savefig("{}.png".format(self.name), dpi=250)
+        plt.savefig(f"{self.name}.png", dpi=250)
         plt.show()

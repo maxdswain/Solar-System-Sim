@@ -33,9 +33,7 @@ class Particle:
         self.G=6.6743e-11
 
     def __str__(self):
-        return "Particle: {0}\n     Mass: {1:.3e}\n     Position: {2}\n     Velocity: {3}\n     Acceleration: {4}".format(
-            self.name, self.mass,self.position, self.velocity, self.acceleration
-        )
+        return f"Particle: {self.name}\n     Mass: {self.mass:.3e}\n     Position: {self.position}\n     Velocity: {self.velocity}\n     Acceleration: {self.acceleration}"
 
     #calculates the position and velocity of the body after one time step using the Euler method
     def updateE(self, deltaT):
