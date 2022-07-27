@@ -6,7 +6,7 @@ This simulation uses one of the Euler, Euler-Cromer, Euler-Richardson or Verlet 
 
 To run my simulation, use the `Main` file and run the functions in that file to run the code. The input bodies (if you wanted to simulate different bodies or different planets) can be configured as well as numerous initial conditions such as the intervals, the time between the intervals, starting date of simulation and whether the linear and angular momentum are tested to ensure the simulation is running accurately. Below is example code of running the simulation:
 
-```
+```python
 t1=Time("2020-12-25 11:00:00", scale="tdb")
 test=Simulation(
     name="Test",
